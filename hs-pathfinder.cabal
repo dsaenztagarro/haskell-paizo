@@ -45,6 +45,10 @@ test-suite test
   build-depends:
     base >=4.7 && <4.8,
     HUnit,
+    QuickCheck,
+    test-framework,
+    test-framework-hunit,
+    test-framework-quickcheck2,
     paizo
 
   ghc-options:

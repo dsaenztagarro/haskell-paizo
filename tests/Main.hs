@@ -2,8 +2,7 @@ module Main where
 
 import CoreTests
 
-import Test.HUnit
+import Test.Framework (defaultMain)
 
-main :: IO Counts
-main = runTestTT $ TestList
-    [ TestLabel "CoreTests" CoreTests.tests ]
+main :: IO ()
+main = defaultMain [CoreTests.tests]
