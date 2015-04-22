@@ -7,6 +7,10 @@ import Test.Tasty.QuickCheck as QC
 import Paizo.Core.Types
 import Paizo.Core.Player
 
+showPlayer :: Assertion
+showPlayer = assertBool "Deriving Show Player"
+		(length (show Player { hitPoints = 10 }) > 0)
+
 expectDisabled :: Player -> Bool -> Assertion
 expectDisabled player status =
     assertBool "expectDisabled -> LogicError" (isDisabled player == status)
@@ -24,7 +28,8 @@ tests = testGroup "Core" [unitTests, properties]
 
 unitTests :: TestTree
 unitTests = testGroup "Unit tests"
-    [ testCase "Player disabled" testPlayerDisabled
+    [ testCase "Deriving Show Player" showPlayer
+  	, testCase "Player disabled" testPlayerDisabled
     , testCase "Player not disabled" testPlayerNotDisabled
     ]
 
