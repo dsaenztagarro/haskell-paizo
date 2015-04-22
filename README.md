@@ -8,6 +8,7 @@
 ```
 cabal init
 cabal configure --enable-tests
+cabal install --only-dependencies --enable-tests
 cabal build
 cabal test --show-details=always
 ```
