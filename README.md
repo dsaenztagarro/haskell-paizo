@@ -3,11 +3,12 @@
 [![Coverage Status](https://coveralls.io/repos/dsaenztagarro/haskell-paizo/badge.svg)]
 (https://coveralls.io/r/dsaenztagarro/haskell-paizo)
 
-# hs-pathfinder
+# haskell-paizo
 
 ```
 cabal init
 cabal configure --enable-tests
+cabal install --only-dependencies --enable-tests
 cabal build
 cabal test --show-details=always
 ```

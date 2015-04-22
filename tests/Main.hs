@@ -1,9 +1,11 @@
 module Main where
 
-import CoreTests
+import Test.Tasty
 
-import Test.HUnit
+import qualified CoreTests
 
-main :: IO Counts
-main = runTestTT $ TestList
-    [ TestLabel "CoreTests" CoreTests.tests ]
+main :: IO ()
+main = defaultMain tests
+
+tests :: TestTree
+tests = testGroup "Tests" [ CoreTests.tests ]
