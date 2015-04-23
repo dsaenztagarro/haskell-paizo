@@ -7,8 +7,9 @@
 
 ```
 cabal init
-cabal configure --enable-tests
+cabal configure --enable-tests --enable-coverage
 cabal install --only-dependencies --enable-tests
 cabal build
-cabal test --show-details=always
+cabal test --show-details=always --keep-tix-files
+cabal run MainTest
 ```
