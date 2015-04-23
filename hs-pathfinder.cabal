@@ -28,7 +28,8 @@ library
   -- other-modules:
   -- other-extensions:
   build-depends:
-    base >=4.7 && <4.8
+    base >=4.7 && <4.8,
+    ansi-terminal
 
   hs-source-dirs:
     src
@@ -44,13 +45,14 @@ test-suite tests
 
   build-depends:
     base >=4.7 && <4.8,
+    ansi-terminal,
     tasty,
     tasty-hunit,
     tasty-quickcheck,
     paizo
 
   ghc-options:
-    -Wall
+    -Wall -fhpc -hpcdir dist/hpc/app-1.0
 
   hs-source-dirs:
     tests
@@ -63,6 +65,27 @@ test-suite tests
 
   type:
     exitcode-stdio-1.0
+
+  default-language:
+    Haskell2010
+
+Executable MainTest
+
+  build-depends:
+    base >=4.7 && <4.8,
+    tasty,
+    tasty-hunit,
+    tasty-quickcheck,
+    paizo
+
+  hs-source-dirs:
+    tests
+
+  main-is:
+    Main.hs
+
+  ghc-options:
+    -Wall -fhpc
 
   default-language:
     Haskell2010
