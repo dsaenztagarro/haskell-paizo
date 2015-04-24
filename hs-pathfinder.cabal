@@ -2,7 +2,7 @@
 -- documentation, see http://haskell.org/cabal/users-guide/
 
 name:                paizo
-version:             0.0.0.2
+version:             0.0.2
 synopsis:            Core dynamics for rpg game
 -- description:
 -- license:
@@ -28,7 +28,7 @@ library
   -- other-modules:
   -- other-extensions:
   build-depends:
-    base >=4.7 && <4.8
+    base
 
   hs-source-dirs:
     src
@@ -46,14 +46,14 @@ library
 test-suite tests
 
   build-depends:
-    base >=4.7 && <4.8,
+    base,
     paizo,
     tasty,
     tasty-hunit,
     tasty-quickcheck
 
   ghc-options:
-    -Wall -fhpc
+    -Wall -fwarn-tabs -fhpc
 
   hs-source-dirs:
     tests
@@ -73,7 +73,7 @@ test-suite tests
 Executable MainTest
 
   build-depends:
-    base >=4.7 && <4.8,
+    base,
     paizo,
     tasty,
     tasty-hunit,
@@ -86,7 +86,7 @@ Executable MainTest
     Main.hs
 
   ghc-options:
-    -Wall -fhpc
+    -Wall -fwarn-tabs -fhpc
 
   default-language:
     Haskell2010
