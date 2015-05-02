@@ -11,24 +11,31 @@ expectStatus :: (Player -> Bool) -> Player -> Bool -> String -> Assertion
 expectStatus fn player status errorMessage =
     assertBool errorMessage (fn player == status)
 
-testPlayerDisabled :: Assertion
-testPlayerDisabled = expectStatus isDisabled player True "player is disabled"
+testPlayerIsAlive :: Assertion
+testPlayerIsAlive = expectStatus isAlive player True "player is disabled"
+    where player = Player { hitPoints = 10, consScore = 5 }
+
+testPlayerIsDisabled :: Assertion
+testPlayerIsDisabled = expectStatus isDisabled player True "player is disabled"
     where player = Player { hitPoints = 0, consScore = 5 }
 
-testPlayerNotDisabled :: IO ()
-testPlayerNotDisabled = do
-    expectStatus isDisabled alivePlayer False "alive player isn't disabled"
-    expectStatus isDisabled dyingPlayer False "dying player isn't disabled"
-    where alivePlayer = Player { hitPoints = 10, consScore = 5 }
-          dyingPlayer = Player { hitPoints = -1, consScore = 5 }
+testPlayerIsDying :: Assertion
+testPlayerIsDying = expectStatus isDying player True "player is dying"
+    where player = Player { hitPoints = -1, consScore = 5 }
+
+testPlayerIsDead :: Assertion
+testPlayerIsDead = expectStatus isDead player True "player is dead"
+    where player = Player { hitPoints = -5, consScore = 5 }
 
 tests :: TestTree
 tests = testGroup "Core" [unitTests, properties]
 
 unitTests :: TestTree
 unitTests = testGroup "Unit tests"
-    [ testCase "Player disabled" testPlayerDisabled
-    , testCase "Player not disabled" testPlayerNotDisabled
+    [ testCase "Player is alive" testPlayerIsAlive
+    , testCase "Player is disabled" testPlayerIsDisabled
+    , testCase "Player is dying" testPlayerIsDying
+    , testCase "Player is dead" testPlayerIsDead
     ]
 
 instance Arbitrary Player where
@@ -40,6 +47,16 @@ instance Arbitrary Player where
 
 properties :: TestTree
 properties = testGroup "Properties (checked by QuickCheck)"
-    [ QC.testProperty "isDying != isDisabled" $
+    [ QC.testProperty "isAlive != isDisabled" $
+      \player -> not $ isAlive player && isDisabled player
+    , QC.testProperty "isAlive != isDying" $
+      \player -> not $ isAlive player && isDying player
+    , QC.testProperty "isAlive != isDead" $
+      \player -> not $ isAlive player && isDead player
+    , QC.testProperty "isDisabled != isDying" $
       \player -> not $ isDisabled player && isDying player
+    , QC.testProperty "isDisabled != isDead" $
+      \player -> not $ isDisabled player && isDead player
+    , QC.testProperty "isDying != isDead" $
+      \player -> not $ isDying player && isDead player
     ]
