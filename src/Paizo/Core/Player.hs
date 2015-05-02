@@ -6,5 +6,8 @@ isDisabled :: Player -> Bool
 isDisabled player = hitPoints player == 0
 
 isDying :: Player -> Bool
-isDying player = hitPoints player < 0
+isDying player = hp < 0 && hp > - consScore player
+    where hp = hitPoints player
 
+isDead :: Player -> Bool
+isDead player = hitPoints player < - consScore player
