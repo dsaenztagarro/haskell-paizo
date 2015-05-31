@@ -2,7 +2,7 @@ module Main where
 
 import Control.Monad (when)
 import Control.Monad.State
-import System.IO (stdin, hSetEcho)
+import System.IO (stdin, stdout, hSetEcho, hSetBuffering, BufferMode(..))
 
 data AppConfig = AppConfig
     { crRound :: Int
@@ -10,7 +10,11 @@ data AppConfig = AppConfig
 
 type App = StateT AppConfig IO
 
-loadEngine = hSetEcho stdin False
+loadEngine :: App ()
+loadEngine = liftIO $ do
+  hSetEcho stdin False
+  hSetBuffering stdin NoBuffering
+  hSetBuffering stdout NoBuffering
 
 printT :: (MonadIO m) => String -> m ()
 printT s = liftIO . putStrLn $ s
@@ -18,18 +22,19 @@ printT s = liftIO . putStrLn $ s
 loadGame :: App ()
 loadGame = printT "Loading game"
 
-playGame :: App ()
-playGame = do
-    liftIO . putStrLn $ "Play round"
+gameLoop :: App ()
+gameLoop = do
+    printT "Play round"
     config <- get
     put $ AppConfig { crRound = crRound config + 1 }
     char <- liftIO getChar
-    when (char == 'c') playGame
+    when (char == 'c') gameLoop
 
 main2 :: App ()
 main2 = do
+    loadEngine
     loadGame
-    playGame
+    gameLoop
 
 main :: IO ()
 main = do
