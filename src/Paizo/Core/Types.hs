@@ -1,10 +1,9 @@
 module Paizo.Core.Types (
   -- * Player
   Player(..)
-
   ) where
 
-data Player = Player
-    { hitPoints :: Int -- hit points
-    , consScore :: Int -- constitution score
+data Player = Player {
+      hitPoints :: Int
+    , consScore :: Int
     } deriving (Show)
