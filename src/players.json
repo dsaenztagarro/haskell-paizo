@@ -1,4 +1,4 @@
 [
-  { "hitPoints": 20, "consScore": 5 },
-  { "hitPoints": 15, "consScore": 7 }
+  { "name": "David", "hitPoints": 20, "consScore": 5 },
+  { "name": "Javier", "hitPoints": 15, "consScore": 7 }
 ]

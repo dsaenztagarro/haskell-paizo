@@ -6,12 +6,14 @@ module Paizo.Core.Types (
   ) where
 
 import Data.Aeson
+import Data.Text (Text)
 import GHC.Generics
 
-data Player = Player {
-      hitPoints :: Int
-    , consScore :: Int
-    } deriving (Show, Generic)
+data Player =
+    Player { name :: Text
+           , hitPoints :: Int
+           , consScore :: Int
+           } deriving (Show, Generic)
 
 -- Instances to convert our type to/from JSON.
 

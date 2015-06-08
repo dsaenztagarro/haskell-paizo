@@ -1,10 +1,11 @@
 module Main where
 
-import Paizo.Core.Types (Player)
+import Paizo.Core.Types (Player(..))
 import Paizo.Plugin.FileLoader (getPlayers)
 
 import Control.Monad (when)
 import Control.Monad.State
+import Data.Text (unpack)
 import System.IO (stdin, stdout, hSetEcho, hSetBuffering, BufferMode(..))
 
 data AppConfig =
@@ -31,8 +32,13 @@ loadGame = do
 
 gameLoop :: App ()
 gameLoop = do
-    printT "Play round"
     config <- get
+    printT $ "Round " ++ show (crRound config)
+    -- playersLoop
+    forM (players config) $ \player -> do
+        printT $ "Player " ++ (unpack $ name player)
+        char <- liftIO getChar
+        return ()
     put $ AppConfig { players = players config, crRound = crRound config + 1 }
     char <- liftIO getChar
     when (char == 'c') gameLoop
