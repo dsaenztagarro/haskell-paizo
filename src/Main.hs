@@ -30,15 +30,20 @@ loadGame = do
     players <- liftIO getPlayers
     put AppConfig { players = players, crRound = 0 }
 
-gameLoop :: App ()
-gameLoop = do
+playersLoop :: App ()
+playersLoop = do
     config <- get
-    printT $ "Round " ++ show (crRound config)
-    -- playersLoop
     forM (players config) $ \player -> do
         printT $ "Player " ++ (unpack $ name player)
         char <- liftIO getChar
         return ()
+    return ()
+
+gameLoop :: App ()
+gameLoop = do
+    config <- get
+    printT $ "Round " ++ show (crRound config)
+    playersLoop
     put $ AppConfig { players = players config, crRound = crRound config + 1 }
     char <- liftIO getChar
     when (char == 'c') gameLoop
